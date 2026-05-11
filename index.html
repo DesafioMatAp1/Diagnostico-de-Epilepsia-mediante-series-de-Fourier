@@ -1,3 +1,6 @@
+# Código Completo — EEG Fourier con Estética de Infografía Científica
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,27 +8,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EEG Fourier — Simulador Biomédico</title>
+<title>EEG Fourier — Visualización Biomédica</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
 
-  --bg:#07111f;
-  --bg2:#0f1f38;
+  --bg:#2d0d59;
+  --bg2:#4a1d82;
 
-  --card:rgba(255,255,255,.04);
-  --border:rgba(255,255,255,.08);
+  --card:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.12);
 
-  --green:#2ecc71;
-  --cyan:#00d2ff;
-  --violet:#9b59b6;
-  --orange:#f39c12;
+  --primary:#d9c2ff;
+  --secondary:#f3e9ff;
+  --accent:#c084fc;
 
-  --white:#f4f7ff;
-  --muted:#8da6c9;
+  --white:#ffffff;
+  --muted:#d9c8ef;
 }
 
 *{
@@ -36,12 +38,10 @@
 
 body{
 
-  font-family:'Inter',sans-serif;
+  font-family:'DM Sans',sans-serif;
 
   background:
-    radial-gradient(circle at top left,#173865 0%,transparent 28%),
-    radial-gradient(circle at bottom right,#10284c 0%,transparent 28%),
-    var(--bg);
+    linear-gradient(135deg,#2d0d59 0%,#4a1d82 100%);
 
   color:var(--white);
 
@@ -56,8 +56,8 @@ body::before{
   inset:0;
 
   background-image:
-    linear-gradient(rgba(46,204,113,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46,204,113,.03) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
 
   background-size:40px 40px;
 
@@ -66,7 +66,8 @@ body::before{
 
 .container{
 
-  width:min(1450px,95%);
+  width:min(1400px,95%);
+
   margin:auto;
 
   padding:2rem 0 4rem;
@@ -78,22 +79,21 @@ body::before{
 header{
 
   text-align:center;
-  margin-bottom:2rem;
+
+  margin-bottom:2.5rem;
 }
 
 .tag{
 
   display:inline-block;
 
-  border:1px solid rgba(46,204,113,.4);
+  border:1px solid rgba(255,255,255,.25);
 
-  color:var(--green);
-
-  font-family:'Space Mono',monospace;
+  color:#f3e8ff;
 
   padding:5px 12px;
 
-  border-radius:5px;
+  border-radius:6px;
 
   font-size:11px;
 
@@ -104,15 +104,19 @@ header{
 
 h1{
 
-  font-size:clamp(2.2rem,5vw,4.5rem);
+  font-size:clamp(2.5rem,5vw,5rem);
+
+  font-weight:700;
 
   line-height:1.05;
 
   margin-bottom:1rem;
+
+  letter-spacing:-0.03em;
 }
 
 h1 span{
-  color:var(--green);
+  color:#e9d5ff;
 }
 
 .subtitle{
@@ -120,6 +124,8 @@ h1 span{
   color:var(--muted);
 
   font-size:15px;
+
+  line-height:1.7;
 }
 
 .layout{
@@ -140,15 +146,18 @@ h1 span{
 
 .card{
 
-  background:var(--card);
+  background:rgba(255,255,255,.07);
 
-  border:1px solid var(--border);
+  border:1px solid rgba(255,255,255,.12);
 
-  border-radius:24px;
+  border-radius:28px;
 
-  padding:1.5rem;
+  padding:1.8rem;
 
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(10px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.18);
 }
 
 .section{
@@ -162,24 +171,24 @@ h1 span{
 
 .section-num{
 
-  color:var(--green);
+  color:white;
 
-  border:1px solid rgba(46,204,113,.4);
+  border:1px solid rgba(255,255,255,.2);
 
-  background:rgba(46,204,113,.08);
+  background:rgba(255,255,255,.08);
 
   padding:4px 10px;
 
-  border-radius:5px;
-
-  font-family:'Space Mono',monospace;
+  border-radius:6px;
 
   font-size:12px;
 }
 
 .section h2{
 
-  font-size:19px;
+  font-size:20px;
+
+  font-weight:700;
 }
 
 canvas{
@@ -188,22 +197,18 @@ canvas{
 
   display:block;
 
-  border-radius:18px;
+  border-radius:22px;
 
-  background:rgba(0,0,0,.3);
+  background:rgba(255,255,255,.04);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
 }
 
 #signalCanvas{
   height:340px;
 }
 
-#harmonicCanvas{
-  height:180px;
-  margin-top:1rem;
-}
-
+#harmonicCanvas,
 #fftCanvas{
   height:180px;
   margin-top:1rem;
@@ -213,19 +218,21 @@ canvas{
 
   margin-top:1rem;
 
-  background:rgba(46,204,113,.08);
+  background:rgba(255,255,255,.08);
 
-  border:1px solid rgba(46,204,113,.18);
+  border:1px solid rgba(255,255,255,.15);
 
-  border-radius:14px;
+  border-radius:18px;
 
-  padding:1rem;
+  padding:1.4rem;
 
   text-align:center;
 
-  color:#a7f3c6;
+  color:#ffffff;
 
-  font-family:'Space Mono',monospace;
+  font-family:'Times New Roman',serif;
+
+  font-size:24px;
 
   overflow:auto;
 }
@@ -238,7 +245,7 @@ canvas{
 
   gap:1rem;
 
-  margin-top:1.2rem;
+  margin-top:1.5rem;
 }
 
 @media(max-width:700px){
@@ -255,16 +262,16 @@ canvas{
 
   margin-bottom:8px;
 
-  font-size:13px;
-
   color:var(--muted);
+
+  font-size:13px;
 }
 
 .control span{
 
-  color:var(--green);
+  color:#ffffff;
 
-  font-family:'Space Mono',monospace;
+  font-weight:700;
 }
 
 input[type=range]{
@@ -277,7 +284,7 @@ input[type=range]{
 
   border-radius:999px;
 
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.12);
 }
 
 input[type=range]::-webkit-slider-thumb{
@@ -289,9 +296,9 @@ input[type=range]::-webkit-slider-thumb{
 
   border-radius:50%;
 
-  background:var(--green);
+  background:#ffffff;
 
-  border:2px solid #07111f;
+  border:2px solid #4a1d82;
 
   cursor:pointer;
 }
@@ -300,171 +307,33 @@ input[type=range]::-webkit-slider-thumb{
 
   display:flex;
   flex-wrap:wrap;
-  gap:.6rem;
+  gap:.7rem;
 
-  margin-top:1rem;
+  margin-top:1.2rem;
 }
 
 .metric{
 
-  padding:7px 12px;
+  padding:8px 13px;
 
   border-radius:999px;
 
-  font-size:11px;
+  background:rgba(255,255,255,.08);
 
-  font-family:'Space Mono',monospace;
-}
-
-.metric.green{
-  background:rgba(46,204,113,.12);
-  color:#a5f5c4;
-}
-
-.metric.cyan{
-  background:rgba(0,210,255,.12);
-  color:#8ee9ff;
-}
-
-.metric.orange{
-  background:rgba(243,156,18,.12);
-  color:#ffd18f;
-}
-
-.metric.violet{
-  background:rgba(155,89,182,.12);
-  color:#e0b5ff;
-}
-
-.presets{
-
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:.8rem;
-}
-
-.preset{
-
-  background:rgba(255,255,255,.04);
-
-  border:1px solid rgba(255,255,255,.06);
-
-  border-radius:16px;
-
-  padding:1rem;
-
-  cursor:pointer;
-
-  transition:.2s;
-}
-
-.preset:hover{
-
-  transform:translateY(-2px);
-
-  border-color:rgba(46,204,113,.4);
-}
-
-.preset.active{
-
-  background:rgba(46,204,113,.1);
-
-  border-color:var(--green);
-}
-
-.preset-title{
-
-  font-weight:700;
-
-  margin-bottom:5px;
-
-  font-size:13px;
-}
-
-.preset-sub{
+  border:1px solid rgba(255,255,255,.1);
 
   font-size:11px;
-
-  color:var(--muted);
-
-  font-family:'Space Mono',monospace;
-}
-
-.pipeline{
-
-  margin-top:1.4rem;
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:1rem;
-}
-
-.step{
-
-  background:rgba(255,255,255,.04);
-
-  border:1px solid rgba(255,255,255,.06);
-
-  border-radius:14px;
-
-  padding:1rem;
-}
-
-.step-title{
-
-  color:var(--green);
-
-  font-weight:700;
-
-  margin-bottom:5px;
-}
-
-.step p{
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  line-height:1.7;
-}
-
-.diag{
-
-  margin-top:1.5rem;
-
-  background:rgba(46,204,113,.06);
-
-  border:1px solid rgba(46,204,113,.18);
-
-  border-radius:16px;
-
-  padding:1rem;
-}
-
-.diag h3{
-
-  margin-bottom:.7rem;
-
-  color:var(--green);
-}
-
-.diag p{
-
-  color:var(--muted);
-
-  line-height:1.7;
-
-  font-size:14px;
 }
 
 .buttons{
 
   display:flex;
+
   gap:.8rem;
-  margin-top:1.3rem;
+
   flex-wrap:wrap;
+
+  margin-top:1.5rem;
 }
 
 button{
@@ -473,40 +342,107 @@ button{
 
   cursor:pointer;
 
-  border-radius:12px;
+  border-radius:14px;
 
-  padding:.8rem 1rem;
+  padding:.9rem 1.2rem;
 
-  font-weight:600;
+  font-weight:700;
 
   transition:.2s;
-}
-
-.btn-primary{
-
-  background:var(--green);
-
-  color:#04121f;
-}
-
-.btn-secondary{
-
-  background:rgba(255,255,255,.06);
-
-  color:var(--white);
-
-  border:1px solid rgba(255,255,255,.08);
 }
 
 button:hover{
   transform:translateY(-2px);
 }
 
+.btn-primary{
+
+  background:#f3e8ff;
+
+  color:#2d0d59;
+}
+
+.btn-secondary{
+
+  background:rgba(255,255,255,.08);
+
+  color:white;
+
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.pipeline{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:1rem;
+
+  margin-top:1rem;
+}
+
+.step{
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:18px;
+
+  padding:1rem;
+}
+
+.step-title{
+
+  font-weight:700;
+
+  margin-bottom:5px;
+
+  color:#ffffff;
+}
+
+.step p{
+
+  color:var(--muted);
+
+  line-height:1.7;
+
+  font-size:14px;
+}
+
+.diag{
+
+  margin-top:1.5rem;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.12);
+
+  border-radius:20px;
+
+  padding:1.2rem;
+}
+
+.diag h3{
+
+  margin-bottom:.7rem;
+
+  color:#ffffff;
+}
+
+.diag p{
+
+  color:var(--muted);
+
+  line-height:1.7;
+}
+
 footer{
 
   margin-top:2rem;
 
-  border-top:1px solid rgba(255,255,255,.08);
+  border-top:1px solid rgba(255,255,255,.1);
 
   padding-top:2rem;
 
@@ -529,34 +465,34 @@ footer{
 <header>
 
 <div class="tag">
-UDD · Ingeniería Biomédica · Series de Fourier · EEG
+UDD · Ingeniería Biomédica · Fourier · EEG
 </div>
 
 <h1>
-Análisis EEG mediante <span>Series de Fourier</span>
+Visualización EEG mediante <span>Series de Fourier</span>
 </h1>
 
 <div class="subtitle">
-Visualización interactiva de ritmos alfa y detección de patrones epilépticos
+Simulación interactiva de ritmos cerebrales y análisis espectral biomédico
 </div>
 
 </header>
 
 <div class="layout">
 
-<!-- LEFT -->
-
 <div class="card">
 
 <div class="section">
 <div class="section-num">01</div>
-<h2>Señal EEG compuesta</h2>
+<h2>Señal EEG</h2>
 </div>
 
 <canvas id="signalCanvas"></canvas>
 
 <div class="formula" id="formula">
-a(t)=1+0.5cos(2πt)+1.0cos(4πt)+0.67cos(6πt)
+
+a(t)=1+\frac{1}{2}\cos(2\pi t)+\cos(4\pi t)+\frac{2}{3}\cos(6\pi t)
+
 </div>
 
 <div class="controls">
@@ -588,7 +524,7 @@ Armónico A₃
 <div class="control">
 <label>
 Ruido EEG
-<span id="vn">0.1</span>
+<span id="vn">0.10</span>
 </label>
 <input type="range" id="noise" min="0" max="1" step="0.01" value="0.1">
 </div>
@@ -597,20 +533,20 @@ Ruido EEG
 
 <div class="metrics">
 
-<div class="metric green">
-Dominante: <span id="dominant">2 Hz</span>
+<div class="metric">
+Frecuencia dominante: 2 Hz
 </div>
 
-<div class="metric cyan">
-Potencia α: <span id="alphaPow">Alta</span>
+<div class="metric">
+Potencia alfa: Alta
 </div>
 
-<div class="metric orange">
-Actividad: <span id="activity">Normal</span>
+<div class="metric" id="activityBox">
+Actividad normal
 </div>
 
-<div class="metric violet">
-Clasificación: <span id="svm">Negativa</span>
+<div class="metric" id="svmBox">
+Clasificación negativa
 </div>
 
 </div>
@@ -633,34 +569,30 @@ Modo Normal
 
 </div>
 
-<!-- RIGHT -->
-
 <div class="card">
 
 <div class="section">
 <div class="section-num">02</div>
-<h2>Cadena biomédica</h2>
+<h2>Pipeline Biomédico</h2>
 </div>
-
-<div class="presets" id="presets"></div>
 
 <div class="pipeline">
 
 <div class="step">
 <div class="step-title">
-1. Adquisición EEG
+1. Captura EEG
 </div>
 <p>
-Captura de actividad eléctrica cerebral mediante electrodos superficiales.
+Adquisición de actividad eléctrica cerebral mediante electrodos superficiales.
 </p>
 </div>
 
 <div class="step">
 <div class="step-title">
-2. Transformada de Fourier
+2. Series de Fourier
 </div>
 <p>
-Descomposición de la señal EEG en componentes sinusoidales y análisis frecuencial.
+Descomposición matemática de la señal EEG en componentes sinusoidales.
 </p>
 </div>
 
@@ -669,7 +601,7 @@ Descomposición de la señal EEG en componentes sinusoidales y análisis frecuen
 3. Extracción de características
 </div>
 <p>
-Identificación de amplitudes dominantes, potencia espectral y patrones anómalos.
+Identificación de frecuencias dominantes, amplitudes y potencia espectral.
 </p>
 </div>
 
@@ -678,7 +610,7 @@ Identificación de amplitudes dominantes, potencia espectral y patrones anómalo
 4. Clasificación SVM
 </div>
 <p>
-Modelo de aprendizaje automático para distinguir actividad normal y epileptiforme.
+Clasificación computacional de patrones fisiológicos y epileptiformes.
 </p>
 </div>
 
@@ -686,12 +618,12 @@ Modelo de aprendizaje automático para distinguir actividad normal y epileptifor
 
 <div class="diag">
 
-<h3 id="diagTitle">
-Diagnóstico EEG
+<h3>
+Interpretación Clínica
 </h3>
 
-<p id="diagDesc">
-Ritmo alfa estable con actividad fisiológica normal y distribución espectral conservada.
+<p id="diagText">
+Actividad alfa fisiológica con distribución espectral estable y sin presencia de actividad epileptiforme.
 </p>
 
 </div>
@@ -716,10 +648,6 @@ Gustavo Castro · René Pino
 
 <script>
 
-/* ======================================================
-   CANVAS
-====================================================== */
-
 const signalCanvas=document.getElementById('signalCanvas');
 const harmonicCanvas=document.getElementById('harmonicCanvas');
 const fftCanvas=document.getElementById('fftCanvas');
@@ -727,10 +655,6 @@ const fftCanvas=document.getElementById('fftCanvas');
 const sctx=signalCanvas.getContext('2d');
 const hctx=harmonicCanvas.getContext('2d');
 const fctx=fftCanvas.getContext('2d');
-
-/* ======================================================
-   STATE
-====================================================== */
 
 const state={
 
@@ -742,10 +666,6 @@ const state={
 
   epileptic:false
 };
-
-/* ======================================================
-   RESIZE
-====================================================== */
 
 function resize(){
 
@@ -764,10 +684,6 @@ function resize(){
 
 window.addEventListener('resize',resize);
 
-/* ======================================================
-   SIGNAL
-====================================================== */
-
 function eeg(t){
 
   let val=
@@ -780,20 +696,15 @@ function eeg(t){
   val += (Math.random()-.5)*state.noise;
 
   if(state.epileptic){
-
     val += Math.sin(20*Math.PI*t)*1.2;
   }
 
   return val;
 }
 
-/* ======================================================
-   GRID
-====================================================== */
-
 function grid(ctx,w,h){
 
-  ctx.strokeStyle='rgba(255,255,255,.05)';
+  ctx.strokeStyle='rgba(255,255,255,.06)';
   ctx.lineWidth=1;
 
   for(let x=0;x<w;x+=50){
@@ -811,18 +722,7 @@ function grid(ctx,w,h){
     ctx.lineTo(w,y);
     ctx.stroke();
   }
-
-  ctx.strokeStyle='rgba(255,255,255,.15)';
-
-  ctx.beginPath();
-  ctx.moveTo(0,h/2);
-  ctx.lineTo(w,h/2);
-  ctx.stroke();
 }
-
-/* ======================================================
-   MAIN SIGNAL
-====================================================== */
 
 function drawSignal(time){
 
@@ -852,26 +752,13 @@ function drawSignal(time){
 
   sctx.strokeStyle=
     state.epileptic
-    ? '#ff5f5f'
-    : '#2ecc71';
+    ? '#ffb3b3'
+    : '#ffffff';
 
-  sctx.lineWidth=3;
-
-  sctx.shadowBlur=20;
-
-  sctx.shadowColor=
-    state.epileptic
-    ? '#ff5f5f'
-    : '#2ecc71';
+  sctx.lineWidth=2.5;
 
   sctx.stroke();
-
-  sctx.shadowBlur=0;
 }
-
-/* ======================================================
-   HARMONICS
-====================================================== */
 
 function drawHarmonics(time){
 
@@ -883,9 +770,10 @@ function drawHarmonics(time){
   grid(hctx,w,h);
 
   const harmonics=[
-    {a:state.a1,f:1,color:'#2ecc71'},
-    {a:state.a2,f:2,color:'#00d2ff'},
-    {a:state.a3,f:3,color:'#9b59b6'}
+
+    {a:state.a1,f:1,color:'#f3e8ff'},
+    {a:state.a2,f:2,color:'#d8b4fe'},
+    {a:state.a3,f:3,color:'#c084fc'}
   ];
 
   harmonics.forEach(hm=>{
@@ -914,10 +802,6 @@ function drawHarmonics(time){
   });
 }
 
-/* ======================================================
-   FFT
-====================================================== */
-
 function drawFFT(){
 
   const w=fftCanvas.clientWidth;
@@ -933,10 +817,10 @@ function drawFFT(){
   ];
 
   const colors=[
-    '#2ecc71',
-    '#00d2ff',
-    '#9b59b6',
-    '#ff5f5f'
+    '#f3e8ff',
+    '#d8b4fe',
+    '#c084fc',
+    '#ffb3b3'
   ];
 
   amps.forEach((a,i)=>{
@@ -953,17 +837,13 @@ function drawFFT(){
 
     fctx.fillRect(x,y,bw,bh);
 
-    fctx.fillStyle='#8da6c9';
+    fctx.fillStyle='#ffffff';
 
-    fctx.font='12px Space Mono';
+    fctx.font='12px DM Sans';
 
-    fctx.fillText((i+1)+'Hz',x+10,h-5);
+    fctx.fillText((i+1)+'Hz',x+15,h-5);
   });
 }
-
-/* ======================================================
-   UI
-====================================================== */
 
 function updateUI(){
 
@@ -972,30 +852,26 @@ function updateUI(){
   v3.textContent=state.a3.toFixed(2);
   vn.textContent=state.noise.toFixed(2);
 
-  formula.textContent=
+  formula.innerHTML=
   `a(t)=1+${state.a1.toFixed(2)}cos(2πt)+${state.a2.toFixed(2)}cos(4πt)+${state.a3.toFixed(2)}cos(6πt)`;
 
   if(state.epileptic){
 
-    activity.textContent='Epiléptica';
-    svm.textContent='Positiva';
+    activityBox.textContent='Actividad epiléptica';
+    svmBox.textContent='Clasificación positiva';
 
-    diagDesc.textContent=
-    'Se detectan oscilaciones de alta frecuencia y actividad epileptiforme compatible con descargas neuronales anormales.';
+    diagText.textContent=
+    'Se observan oscilaciones rápidas y actividad de alta frecuencia compatibles con descargas epileptiformes.';
 
   }else{
 
-    activity.textContent='Normal';
-    svm.textContent='Negativa';
+    activityBox.textContent='Actividad normal';
+    svmBox.textContent='Clasificación negativa';
 
-    diagDesc.textContent=
-    'Ritmo alfa estable con actividad fisiológica normal y distribución espectral conservada.';
+    diagText.textContent=
+    'Actividad alfa fisiológica con distribución espectral estable y sin presencia de actividad epileptiforme.';
   }
 }
-
-/* ======================================================
-   LOOP
-====================================================== */
 
 function animate(ts){
 
@@ -1007,10 +883,6 @@ function animate(ts){
 
   requestAnimationFrame(animate);
 }
-
-/* ======================================================
-   EVENTS
-====================================================== */
 
 a1.oninput=e=>{
   state.a1=parseFloat(e.target.value);
@@ -1054,10 +926,6 @@ normalBtn.onclick=()=>{
   updateUI();
 };
 
-/* ======================================================
-   INIT
-====================================================== */
-
 window.onload=()=>{
 
   resize();
@@ -1071,3 +939,4 @@ window.onload=()=>{
 
 </body>
 </html>
+```
