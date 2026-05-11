@@ -487,9 +487,7 @@ Simulación interactiva de ritmos cerebrales y análisis espectral biomédico
 <canvas id="signalCanvas"></canvas>
 
 <div class="formula" id="formula">
-
-a(t)=1+\frac{1}{2}\cos(2\pi t)+\cos(4\pi t)+\frac{2}{3}\cos(6\pi t)
-
+a(t)=1+½cos(2πt)+cos(4πt)+⅔cos(6πt)
 </div>
 
 <div class="controls">
@@ -849,8 +847,8 @@ function updateUI(){
   v3.textContent=state.a3.toFixed(2);
   vn.textContent=state.noise.toFixed(2);
 
-  formula.innerHTML=
-  `a(t)=1+${state.a1.toFixed(2)}cos(2πt)+${state.a2.toFixed(2)}cos(4πt)+${state.a3.toFixed(2)}cos(6πt)`;
+  formula.innerHTML =
+  `a(t)=1+½cos(2πt)+cos(4πt)+⅔cos(6πt)`;
 
   if(state.epileptic){
 
@@ -936,4 +934,3 @@ window.onload=()=>{
 
 </body>
 </html>
-```
